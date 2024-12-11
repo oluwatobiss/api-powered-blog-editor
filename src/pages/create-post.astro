@@ -13,6 +13,22 @@ import Layout from "../layouts/Layout.astro";
       <label for="body">Body</label>
       <textarea name="body" id="body"></textarea>
     </div>
-    <button type="submit">Add Post</button>
+    <add-post-btn>
+      <button type="submit">Add Post</button>
+    </add-post-btn>
   </form>
 </Layout>
+
+<script>
+  class AddPostBtn extends HTMLElement {
+    connectedCallback() {
+      const button = this.querySelector("button");
+      button?.addEventListener("click", () => {
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 10);
+      });
+    }
+  }
+  customElements.define("add-post-btn", AddPostBtn);
+</script>

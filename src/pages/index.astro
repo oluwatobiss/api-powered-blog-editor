@@ -6,4 +6,32 @@ const allPosts = await getPosts.json();
 
 <Layout>
   <h1>Hello!!!</h1>
+  {
+    allPosts.map((post: any) => {
+      return (
+        <div>
+          <h3>{post.title}</h3>
+          <delete-btn data-id={`${post.id}`}>
+            <button type="button">Delete</button>
+          </delete-btn>
+        </div>
+      );
+    })
+  }
 </Layout>
+
+<script>
+  class DeleteBtn extends HTMLElement {
+    connectedCallback() {
+      const postId = this.dataset.id;
+      const button = this.querySelector("button");
+      button?.addEventListener("click", async () => {
+        await fetch(`http://localhost:3000/posts/${postId}`, {
+          method: "DELETE",
+        });
+        location.reload();
+      });
+    }
+  }
+  customElements.define("delete-btn", DeleteBtn);
+</script>
