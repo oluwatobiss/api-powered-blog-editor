@@ -14,6 +14,9 @@ const allPosts = await getPosts.json();
           <delete-btn data-id={`${post.id}`}>
             <button type="button">Delete</button>
           </delete-btn>
+          <edit-btn data-post={JSON.stringify(post)}>
+            <button type="button">Edit</button>
+          </edit-btn>
         </div>
       );
     })
@@ -34,4 +37,15 @@ const allPosts = await getPosts.json();
     }
   }
   customElements.define("delete-btn", DeleteBtn);
+  class EditBtn extends HTMLElement {
+    connectedCallback() {
+      const postData = this.dataset.post || "";
+      const button = this.querySelector("button");
+      button?.addEventListener("click", async () => {
+        sessionStorage.setItem("allblogPostToEdit", postData);
+        window.location.href = "/edit-post/";
+      });
+    }
+  }
+  customElements.define("edit-btn", EditBtn);
 </script>
