@@ -4,8 +4,23 @@ const getPosts = await fetch("http://localhost:3000/posts/");
 const allPosts = await getPosts.json();
 ---
 
+<style>
+  div {
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 15px;
+  }
+  h3 {
+    margin-top: 0;
+  }
+  button {
+    margin-right: 7px;
+  }
+</style>
+
 <Layout>
-  <h1>Hello!!!</h1>
+  <h1>All posts</h1>
   {
     allPosts.map((post: any) => {
       return (
