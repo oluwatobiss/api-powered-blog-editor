@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-const getPosts = await fetch("http://localhost:3000/posts/");
+const getPosts = await fetch("http://localhost:3000/posts");
 const allPosts = await getPosts.json();
 ---
 
