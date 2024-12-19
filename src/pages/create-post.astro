@@ -1,34 +1,57 @@
 ---
+export const prerender = false;
 import Layout from "../layouts/Layout.astro";
+
+let isError = false;
+const errorMsgs = { title: "", body: "" };
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    const title = data.get("title");
+    const body = data.get("body");
+
+    if (typeof title !== "string" || title.length < 1) {
+      isError = true;
+      errorMsgs.title += "Please enter a title.";
+    }
+
+    if (typeof body !== "string" || body.length < 1) {
+      isError = true;
+      errorMsgs.body += "Body must not be empty.";
+    }
+
+    if (!isError) {
+      await fetch("http://localhost:3000/posts", {
+        method: "POST",
+        body: JSON.stringify({ title, body }),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      });
+      return Astro.redirect("/");
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
 ---
 
 <Layout>
   <h1>Add new post</h1>
-  <form action="http://localhost:3000/posts" method="post">
+  <form method="post">
     <div>
       <label for="title">Title</label>
       <input type="text" name="title" id="title" />
+      {errorMsgs.title && <p>{errorMsgs.title}</p>}
     </div>
     <div>
       <label for="body">Body</label>
       <textarea name="body" id="body"></textarea>
+      {errorMsgs.body && <p>{errorMsgs.body}</p>}
     </div>
-    <add-post-btn>
-      <button type="submit">Add Post</button>
-    </add-post-btn>
+    <button>Add Post</button>
   </form>
 </Layout>
-
-<script>
-  class AddPostBtn extends HTMLElement {
-    connectedCallback() {
-      const button = this.querySelector("button");
-      button?.addEventListener("click", () => {
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 10);
-      });
-    }
-  }
-  customElements.define("add-post-btn", AddPostBtn);
-</script>
