@@ -1,57 +1,10 @@
 ---
-export const prerender = false;
+import CreatePostForm from "../components/CreatePostForm";
 import Layout from "../layouts/Layout.astro";
-
-let isError = false;
-const errorMsgs = { title: "", body: "" };
-
-if (Astro.request.method === "POST") {
-  try {
-    const data = await Astro.request.formData();
-    const title = data.get("title");
-    const body = data.get("body");
-
-    if (typeof title !== "string" || title.length < 1) {
-      isError = true;
-      errorMsgs.title += "Please enter a title.";
-    }
-
-    if (typeof body !== "string" || body.length < 1) {
-      isError = true;
-      errorMsgs.body += "Body must not be empty.";
-    }
-
-    if (!isError) {
-      await fetch("http://localhost:3000/posts", {
-        method: "POST",
-        body: JSON.stringify({ title, body }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-      return Astro.redirect("/");
-    }
-  } catch (error) {
-    if (error instanceof Error) {
-      console.error(error.message);
-    }
-  }
-}
+const pageTitle = "Add New Post | APIPoweredBlog";
 ---
 
-<Layout>
+<Layout pageTitle={pageTitle}>
   <h1>Add new post</h1>
-  <form method="post">
-    <div>
-      <label for="title">Title</label>
-      <input type="text" name="title" id="title" />
-      {errorMsgs.title && <p>{errorMsgs.title}</p>}
-    </div>
-    <div>
-      <label for="body">Body</label>
-      <textarea name="body" id="body"></textarea>
-      {errorMsgs.body && <p>{errorMsgs.body}</p>}
-    </div>
-    <button>Add Post</button>
-  </form>
+  <CreatePostForm client:only="react" />
 </Layout>

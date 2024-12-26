@@ -1,25 +1,28 @@
 import { useState } from "react";
 
-const postDataJson = sessionStorage.getItem("allblogPostToEdit");
-const postData = postDataJson && JSON.parse(postDataJson);
+const userTokenJson = sessionStorage.getItem("apiPoweredBlogToken");
+const userToken = userTokenJson && JSON.parse(userTokenJson);
 
-export default function EditPostForm() {
-  const [title, setTitle] = useState(postData.title);
-  const [body, setBody] = useState(postData.body);
+export default function CreatePostForm() {
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      await fetch(`http://localhost:3000/posts/${postData.id}`, {
-        method: "PUT",
+      await fetch("http://localhost:3000/posts", {
+        method: "POST",
         body: JSON.stringify({ title, body }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${userToken?.token}`,
         },
       });
       window.location.href = "/";
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error(error.message);
+      }
     }
   }
 
@@ -44,7 +47,7 @@ export default function EditPostForm() {
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
       </div>
-      <button type="submit">Update Post</button>
+      <button type="submit">Add Post</button>
     </form>
   );
 }
