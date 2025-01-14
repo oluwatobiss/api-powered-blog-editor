@@ -7,7 +7,7 @@ export default function CreatePostForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const userToken = sessionStorage.getItem("apiPoweredBlogToken");
+      const userToken = localStorage.getItem("apiPoweredBlogToken");
       await fetch("http://localhost:3000/posts", {
         method: "POST",
         body: JSON.stringify({ title, body }),
