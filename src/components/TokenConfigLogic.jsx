@@ -4,10 +4,13 @@ export default function TokenConfigLogic() {
   useEffect(() => {
     const expectedOrigin = "http://localhost:4321";
     function handleMessageEvent(e) {
+      console.log("=== TokenConfigLogic ===");
+      console.log(e);
+
       if (e.origin === expectedOrigin) {
-        const jwtObj = JSON.parse(e.data);
-        if (jwtObj !== null) {
-          localStorage.setItem("apiPoweredBlogToken", JSON.stringify(jwtObj));
+        const token = e.data;
+        if (token !== null) {
+          localStorage.setItem("apiPoweredBlogToken", token);
         }
       }
     }

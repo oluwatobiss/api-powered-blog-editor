@@ -7,14 +7,13 @@ export default function CreatePostForm() {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      const userTokenJson = sessionStorage.getItem("apiPoweredBlogToken");
-      const userToken = userTokenJson && JSON.parse(userTokenJson);
+      const userToken = sessionStorage.getItem("apiPoweredBlogToken");
       await fetch("http://localhost:3000/posts", {
         method: "POST",
         body: JSON.stringify({ title, body }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${userToken?.token}`,
+          Authorization: `Bearer ${userToken}`,
         },
       });
       window.location.href = "/";
