@@ -80,3 +80,18 @@ textarea {
 textarea {
   min-height: 40vh;
 }
+
+.publish-post-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 5px;
+}
+
+.publish-post-container label {
+  margin: initial;
+}
+
+.publish-post-container input {
+  width: initial;
+}

@@ -3,6 +3,7 @@ import { useState } from "react";
 export default function CreatePostForm() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const [published, setPublished] = useState(false);
 
   async function submitPost(e) {
     e.preventDefault();
@@ -13,7 +14,7 @@ export default function CreatePostForm() {
       const authorId = userData.id;
       await fetch(`http://localhost:3000/posts/authors/${authorId}`, {
         method: "POST",
-        body: JSON.stringify({ title, body }),
+        body: JSON.stringify({ title, body, published }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
           Authorization: `Bearer ${userToken}`,
@@ -47,6 +48,17 @@ export default function CreatePostForm() {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
+      </div>
+      <div className="publish-post-container">
+        <label htmlFor="publishPost" className="publish-post-label">
+          Publish Now?
+        </label>
+        <input
+          type="checkbox"
+          id="publishPost"
+          checked={published}
+          onChange={() => setPublished(!published)}
+        />
       </div>
       <button type="submit">Add Post</button>
     </form>
