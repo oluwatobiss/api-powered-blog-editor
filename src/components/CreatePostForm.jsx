@@ -4,11 +4,14 @@ export default function CreatePostForm() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
-  async function handleSubmit(e) {
+  async function submitPost(e) {
     e.preventDefault();
     try {
       const userToken = localStorage.getItem("apiPoweredBlogToken");
-      await fetch("http://localhost:3000/posts", {
+      const userDataJson = localStorage.getItem("apiPoweredBlogUserData");
+      const userData = userDataJson && JSON.parse(userDataJson);
+      const authorId = userData.id;
+      await fetch(`http://localhost:3000/posts/authors/${authorId}`, {
         method: "POST",
         body: JSON.stringify({ title, body }),
         headers: {
@@ -25,7 +28,7 @@ export default function CreatePostForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={submitPost}>
       <div>
         <label htmlFor="title">Title</label>
         <input

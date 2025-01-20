@@ -42,7 +42,19 @@ h1 {
   background-color: #ff9776;
 }
 
+.post-card {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 15px;
+}
+
+.post-card-title {
+  margin-top: 0;
+}
+
 button {
+  margin-right: 7px;
   padding: 7px 20px;
 }
 

@@ -1,14 +1,17 @@
 import { useState } from "react";
 
-const postDataJson = sessionStorage.getItem("allblogPostToEdit");
+const postDataJson = localStorage.getItem("allblogPostToEdit");
 const postData = postDataJson && JSON.parse(postDataJson);
 
 export default function EditPostForm() {
   const [title, setTitle] = useState(postData.title);
   const [body, setBody] = useState(postData.body);
 
-  async function handleSubmit(e) {
+  async function submitPostUpdates(e) {
     e.preventDefault();
+    console.log("=== submitPostUpdates ===");
+    console.log(postData);
+
     try {
       await fetch(`http://localhost:3000/posts/${postData.id}`, {
         method: "PUT",
@@ -24,7 +27,7 @@ export default function EditPostForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={submitPostUpdates}>
       <div>
         <label htmlFor="title">Title</label>
         <input

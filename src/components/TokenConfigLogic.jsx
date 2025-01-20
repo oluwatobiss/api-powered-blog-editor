@@ -8,9 +8,13 @@ export default function TokenConfigLogic() {
       console.log(e);
 
       if (e.origin === expectedOrigin) {
-        const token = e.data;
-        if (token !== null) {
-          localStorage.setItem("apiPoweredBlogToken", token);
+        const userObj = e.data;
+        if (userObj !== null) {
+          localStorage.setItem("apiPoweredBlogToken", userObj.token);
+          localStorage.setItem(
+            "apiPoweredBlogUserData",
+            JSON.stringify(userObj.payload)
+          );
         }
       }
     }

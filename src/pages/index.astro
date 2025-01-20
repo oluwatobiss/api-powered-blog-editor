@@ -1,66 +1,9 @@
 ---
+import UserPosts from "../components/UserPosts";
 import Layout from "../layouts/Layout.astro";
-const getPosts = await fetch("http://localhost:3000/posts");
-const allPosts = await getPosts.json();
 ---
-
-<style>
-  div {
-    border: 1px solid gray;
-    border-radius: 5px;
-    padding: 20px;
-    margin-bottom: 15px;
-  }
-  h3 {
-    margin-top: 0;
-  }
-  button {
-    margin-right: 7px;
-  }
-</style>
 
 <Layout>
   <h1>All posts</h1>
-  {
-    allPosts.map((post: any) => {
-      return (
-        <div>
-          <h3>{post.title}</h3>
-          <delete-btn data-id={`${post.id}`}>
-            <button type="button">Delete</button>
-          </delete-btn>
-          <edit-btn data-post={JSON.stringify(post)}>
-            <button type="button">Edit</button>
-          </edit-btn>
-        </div>
-      );
-    })
-  }
+  <UserPosts client:only="react" />
 </Layout>
-
-<script>
-  class DeleteBtn extends HTMLElement {
-    connectedCallback() {
-      const postId = this.dataset.id;
-      const button = this.querySelector("button");
-      button?.addEventListener("click", async () => {
-        await fetch(`http://localhost:3000/posts/${postId}`, {
-          method: "DELETE",
-        });
-        location.reload();
-      });
-    }
-  }
-  customElements.define("delete-btn", DeleteBtn);
-  class EditBtn extends HTMLElement {
-    connectedCallback() {
-      const postData = this.dataset.post || "";
-      const button = this.querySelector("button");
-      button?.addEventListener("click", async () => {
-        sessionStorage.setItem("allblogPostToEdit", postData);
-        window.location.href = "/edit-post/";
-      });
-    }
-  }
-  customElements.define("edit-btn", EditBtn);
-</script>
