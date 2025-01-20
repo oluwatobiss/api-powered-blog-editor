@@ -6,6 +6,7 @@ const postData = postDataJson && JSON.parse(postDataJson);
 export default function EditPostForm() {
   const [title, setTitle] = useState(postData.title);
   const [body, setBody] = useState(postData.body);
+  const [published, setPublished] = useState(postData.published);
 
   async function submitPostUpdates(e) {
     e.preventDefault();
@@ -15,7 +16,7 @@ export default function EditPostForm() {
     try {
       await fetch(`http://localhost:3000/posts/${postData.id}`, {
         method: "PUT",
-        body: JSON.stringify({ title, body }),
+        body: JSON.stringify({ title, body, published }),
         headers: {
           "Content-type": "application/json; charset=UTF-8",
         },
@@ -46,6 +47,17 @@ export default function EditPostForm() {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
+      </div>
+      <div className="publish-post-container">
+        <label htmlFor="publishPost" className="publish-post-label">
+          Publish Now?
+        </label>
+        <input
+          type="checkbox"
+          id="publishPost"
+          checked={published}
+          onChange={() => setPublished(!published)}
+        />
       </div>
       <button type="submit">Update Post</button>
     </form>
