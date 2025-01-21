@@ -1,6 +1,10 @@
 ---
 import TokenConfigLogic from "../components/TokenConfigLogic";
+import Layout from "../layouts/Layout.astro";
+const pageTitle = "Token Configuration | APIPoweredBlog";
 ---
 
-<h1>Token Configuration</h1>
-<TokenConfigLogic client:only="react" />
+<Layout pageTitle={pageTitle}>
+  <h1>Token Configuration</h1>
+  <TokenConfigLogic client:only="react" />
+</Layout>
