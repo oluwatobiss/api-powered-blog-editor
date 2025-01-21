@@ -48,10 +48,8 @@ export default function EditPostForm() {
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
       </div>
-      <div className="publish-post-container">
-        <label htmlFor="publishPost" className="publish-post-label">
-          Publish Now?
-        </label>
+      <div className="checkbox-container">
+        <label htmlFor="publishPost">Publish Now?</label>
         <input
           type="checkbox"
           id="publishPost"

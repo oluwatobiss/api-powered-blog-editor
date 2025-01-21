@@ -81,17 +81,17 @@ textarea {
   min-height: 40vh;
 }
 
-.publish-post-container {
+.checkbox-container {
   display: flex;
   align-items: center;
   margin-bottom: 10px;
   gap: 5px;
 }
 
-.publish-post-container label {
+.checkbox-container label {
   margin: initial;
 }
 
-.publish-post-container input {
+.checkbox-container input {
   width: initial;
 }
