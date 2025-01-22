@@ -46,13 +46,19 @@ export default function UserPosts() {
     console.log(userData);
 
     async function getPosts() {
+      const fetchUrl =
+        userData.status === "ADMIN"
+          ? "http://localhost:3000/posts"
+          : `http://localhost:3000/posts/authors/${userData?.id}`;
+
+      console.log("=== getPosts UserPosts fetchUrl ===");
+      console.log(fetchUrl);
+
       try {
-        const response = await fetch(
-          `http://localhost:3000/posts/authors/${userData?.id}`
-        );
+        const response = await fetch(fetchUrl);
         const posts = await response.json();
 
-        console.log("=== getPosts UserPosts useEffect ===");
+        console.log("=== getPosts UserPosts try block ===");
         console.log(posts);
 
         setPosts(posts);
