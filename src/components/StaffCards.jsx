@@ -23,7 +23,13 @@ export default function StaffCards() {
   }
 
   function createStaffCards(members) {
+    const userDataJson = localStorage.getItem("apiPoweredBlogUserData");
+    const userData = userDataJson && JSON.parse(userDataJson);
+
     return members.map((member) => {
+      console.log("=== StaffCards createStaffCards ===");
+      console.log({ userData, member });
+
       return (
         <div key={member.id} className="member-card">
           <div className="member-card-bio">
@@ -32,9 +38,13 @@ export default function StaffCards() {
           <h3 className="member-card-name">
             {member.firstName} {member.lastName}
           </h3>
-          <button type="button" onClick={() => deleteMember(member.id)}>
-            Delete
-          </button>
+          {userData.username === member.username ? (
+            ""
+          ) : (
+            <button type="button" onClick={() => deleteMember(member.id)}>
+              Delete
+            </button>
+          )}
           <button type="button" onClick={() => editMember(member)}>
             Edit
           </button>
