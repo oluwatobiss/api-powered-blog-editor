@@ -68,7 +68,7 @@ export default function UserPosts() {
         }
       }
     }
-    getPosts();
+    userData && getPosts();
   }, [reload]);
 
   return <article>{posts.length ? createPostElements(posts) : ""}</article>;

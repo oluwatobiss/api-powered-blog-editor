@@ -3,6 +3,11 @@ import { useEffect, useState } from "react";
 export default function Navigation() {
   const [userStatus, setUserStatus] = useState("");
 
+  function logoutUser() {
+    sessionStorage.removeItem("apiPoweredBlogToken");
+    window.location.href = "/";
+  }
+
   useEffect(() => {
     const userDataJson = localStorage.getItem("apiPoweredBlogUserData");
     const userData = userDataJson && JSON.parse(userDataJson);
@@ -18,8 +23,14 @@ export default function Navigation() {
   return (
     <div className="nav-links">
       <a href="/">Home</a>
-      <a href="/create-post/">Create post</a>
+      {!userStatus && <a href="/sign-up">Sign up</a>}
       {userStatus === "ADMIN" ? <a href="/manage-staff/">Manage staff</a> : ""}
+      {userStatus && (
+        <>
+          <a href="/create-post/">Create post</a>
+          <span onClick={logoutUser}>Log out</span>
+        </>
+      )}
     </div>
   );
 }
