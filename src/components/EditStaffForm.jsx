@@ -1,0 +1,139 @@
+import { useState } from "react";
+
+const userDataJson = localStorage.getItem("apiPoweredBlogUserData");
+const staffDataJson = localStorage.getItem("apiPoweredBlogStaffToEdit");
+const userData = userDataJson && JSON.parse(userDataJson);
+const staffData = staffDataJson && JSON.parse(staffDataJson);
+
+export default function EditStaffForm() {
+  const [firstName, setFirstName] = useState(staffData.firstName);
+  const [lastName, setLastName] = useState(staffData.lastName);
+  const [username, setUsername] = useState(staffData.username);
+  const [email, setEmail] = useState(staffData.email);
+  const [admin, setAdmin] = useState(staffData.status === "ADMIN");
+  const [adminCode, setAdminCode] = useState("");
+  const [error, setError] = useState("");
+
+  console.log("=== Check if admin state works ===");
+  console.log(admin);
+
+  console.log({ userData, staffData });
+
+  async function submitStaffUpdates(e) {
+    e.preventDefault();
+    console.log("=== submitStaffUpdates ===");
+    console.log(staffData);
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/users/${staffData.id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            username,
+            email,
+            admin,
+            adminCode,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
+      );
+      const staffDataResponse = await response.json();
+
+      console.log("=== EditStaffForm ===");
+      console.log(staffDataResponse);
+
+      staffDataResponse?.error
+        ? setError(staffDataResponse.error)
+        : (window.location.href = "/");
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function updateAdminCode(e) {
+    error && setError("");
+    setAdminCode(e.target.value);
+  }
+
+  return (
+    <form onSubmit={submitStaffUpdates}>
+      <div>
+        <label htmlFor="firstName">First name</label>
+        <input
+          type="text"
+          name="firstName"
+          id="firstName"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="lastName">Last name</label>
+        <input
+          type="text"
+          name="lastName"
+          id="lastName"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
+      <div className="checkbox-container">
+        <label htmlFor="adminCheckbox">Admin?</label>
+        <input
+          type="checkbox"
+          id="adminCheckbox"
+          checked={admin}
+          onChange={() =>
+            userData.username === staffData.username ? null : setAdmin(!admin)
+          }
+        />
+      </div>
+      {admin ? (
+        <div>
+          <label htmlFor="adminCode">Enter admin passcode:</label>
+          <input
+            type="password"
+            name="adminCode"
+            id="adminCode"
+            value={adminCode}
+            onChange={updateAdminCode}
+            required
+          />
+        </div>
+      ) : (
+        ""
+      )}
+      {error && <div className="error">{error}</div>}
+      <button type="submit">Update Staff</button>
+    </form>
+  );
+}

@@ -1,0 +1,9 @@
+---
+import EditStaffForm from "../components/EditStaffForm";
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout>
+  <h1>Edit this staff</h1>
+  <EditStaffForm client:only="react" />
+</Layout>

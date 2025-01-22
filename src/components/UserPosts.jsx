@@ -18,7 +18,7 @@ export default function UserPosts() {
   }
 
   async function editPost(post) {
-    localStorage.setItem("allblogPostToEdit", JSON.stringify(post));
+    localStorage.setItem("apiPoweredBlogPostToEdit", JSON.stringify(post));
     window.location.href = "/edit-post/";
   }
 

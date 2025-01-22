@@ -43,15 +43,27 @@ h1 {
   background-color: #ff9776;
 }
 
-.post-card {
+.post-card,
+.member-card {
   border: 1px solid gray;
   border-radius: 5px;
   padding: 20px;
   margin-bottom: 15px;
 }
 
-.post-card-title {
+.post-card-title,
+.member-card-name {
   margin-top: 0;
+}
+
+.member-card-name {
+  margin-bottom: 5px;
+}
+
+.member-card-bio {
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: gray;
 }
 
 button {

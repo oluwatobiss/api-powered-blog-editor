@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const postDataJson = localStorage.getItem("allblogPostToEdit");
+const postDataJson = localStorage.getItem("apiPoweredBlogPostToEdit");
 const postData = postDataJson && JSON.parse(postDataJson);
 
 export default function EditPostForm() {
