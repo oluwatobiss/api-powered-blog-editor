@@ -8,7 +8,7 @@ export default function SignUpForm() {
   const [password, setPassword] = useState("");
   const [admin, setAdmin] = useState(false);
   const [adminCode, setAdminCode] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState([]);
 
   async function registerUser(e) {
     e.preventDefault();
@@ -32,9 +32,10 @@ export default function SignUpForm() {
 
       console.log("=== SignUpForm ===");
       console.log(userData);
+      console.log(userData.errors?.length);
 
-      userData?.error
-        ? setError(userData.error)
+      userData.errors?.length
+        ? setErrors(userData.errors)
         : (window.location.href = "http://localhost:4321");
     } catch (error) {
       if (error instanceof Error) {
@@ -44,8 +45,16 @@ export default function SignUpForm() {
   }
 
   function updateAdminCode(e) {
-    error && setError("");
+    errors.length && setErrors([]);
     setAdminCode(e.target.value);
+  }
+
+  function showErrorFor(field) {
+    return errors.find((c) => c.path === field) ? (
+      <div className="error">{errors.find((c) => c.path === field).msg}</div>
+    ) : (
+      ""
+    );
   }
 
   return (
@@ -61,6 +70,7 @@ export default function SignUpForm() {
           required
         />
       </div>
+      {showErrorFor("firstName")}
       <div>
         <label htmlFor="lastName">Last name</label>
         <input
@@ -72,6 +82,7 @@ export default function SignUpForm() {
           required
         />
       </div>
+      {showErrorFor("lastName")}
       <div>
         <label htmlFor="username">Username</label>
         <input
@@ -83,6 +94,7 @@ export default function SignUpForm() {
           required
         />
       </div>
+      {showErrorFor("username")}
       <div>
         <label htmlFor="email">Email</label>
         <input
@@ -94,6 +106,7 @@ export default function SignUpForm() {
           required
         />
       </div>
+      {showErrorFor("email")}
       <div>
         <label htmlFor="password">Password</label>
         <input
@@ -105,6 +118,7 @@ export default function SignUpForm() {
           required
         />
       </div>
+      {showErrorFor("password")}
       <div className="checkbox-container">
         <label htmlFor="adminCheckbox">Admin?</label>
         <input
@@ -129,7 +143,7 @@ export default function SignUpForm() {
       ) : (
         ""
       )}
-      {error && <div className="error">{error}</div>}
+      {showErrorFor("adminCode")}
       <button type="submit">Sign up</button>
     </form>
   );

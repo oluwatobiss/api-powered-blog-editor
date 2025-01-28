@@ -113,3 +113,10 @@ textarea {
 .checkbox-container input {
   width: initial;
 }
+
+.error {
+  margin-bottom: 20px;
+  font-size: small;
+  word-wrap: break-word;
+  color: #e25851;
+}
