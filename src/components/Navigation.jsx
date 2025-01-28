@@ -9,7 +9,13 @@ export default function Navigation() {
   }
 
   useEffect(() => {
-    const userDataJson = localStorage.getItem("apiPoweredBlogUserData");
+    let userDataJson = localStorage.getItem("apiPoweredBlogUserData");
+
+    console.log("=== Editor's Navigation useEffect ===");
+    console.log(userDataJson);
+
+    userDataJson === "undefined" && (userDataJson = undefined);
+
     const userData = userDataJson && JSON.parse(userDataJson);
     console.log("=== Navigation useEffect ===");
     console.log(userData);

@@ -39,7 +39,13 @@ export default function UserPosts() {
   }
 
   useEffect(() => {
-    const userDataJson = localStorage.getItem("apiPoweredBlogUserData");
+    let userDataJson = localStorage.getItem("apiPoweredBlogUserData");
+
+    console.log("=== Editor's UserPosts useEffect ===");
+    console.log(userDataJson);
+
+    userDataJson === "undefined" && (userDataJson = undefined);
+
     const userData = userDataJson && JSON.parse(userDataJson);
 
     console.log("=== UserPosts useEffect ===");
