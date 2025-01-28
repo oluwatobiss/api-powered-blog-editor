@@ -4,6 +4,7 @@ export default function CreatePostForm() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [published, setPublished] = useState(false);
+  const [errors, setErrors] = useState([]);
 
   async function submitPost(e) {
     e.preventDefault();
@@ -12,20 +13,39 @@ export default function CreatePostForm() {
       const userDataJson = localStorage.getItem("apiPoweredBlogUserData");
       const userData = userDataJson && JSON.parse(userDataJson);
       const authorId = userData.id;
-      await fetch(`http://localhost:3000/posts/authors/${authorId}`, {
-        method: "POST",
-        body: JSON.stringify({ title, body, published }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
-      window.location.href = "/";
+      const response = await fetch(
+        `http://localhost:3000/posts/authors/${authorId}`,
+        {
+          method: "POST",
+          body: JSON.stringify({ title, body, published }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      const responseObj = await response.json();
+
+      console.log("=== submitPost Response ===");
+      console.log(responseObj);
+      console.log(responseObj.errors?.length);
+
+      responseObj.errors?.length
+        ? setErrors(responseObj.errors)
+        : (window.location.href = "/");
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
       }
     }
+  }
+
+  function showErrorFor(field) {
+    return errors.find((c) => c.path === field) ? (
+      <div className="error">{errors.find((c) => c.path === field).msg}</div>
+    ) : (
+      ""
+    );
   }
 
   return (
@@ -40,6 +60,7 @@ export default function CreatePostForm() {
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
+      {showErrorFor("title")}
       <div>
         <label htmlFor="body">Body</label>
         <textarea
@@ -49,6 +70,7 @@ export default function CreatePostForm() {
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
       </div>
+      {showErrorFor("body")}
       <div className="checkbox-container">
         <label htmlFor="publishPost">Publish Now?</label>
         <input
