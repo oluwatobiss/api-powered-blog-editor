@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const userToken = localStorage.getItem("apiPoweredBlogToken");
+
 export default function StaffCards() {
   const [members, setMembers] = useState([]);
   const [reload, setReload] = useState(false);
@@ -8,6 +10,7 @@ export default function StaffCards() {
     try {
       await fetch(`http://localhost:3000/users/${memberId}`, {
         method: "DELETE",
+        headers: { Authorization: `Bearer ${userToken}` },
       });
       setReload(!reload);
     } catch (error) {
@@ -56,7 +59,9 @@ export default function StaffCards() {
   useEffect(() => {
     async function getMembers() {
       try {
-        const response = await fetch(`http://localhost:3000/users`);
+        const response = await fetch(`http://localhost:3000/users`, {
+          headers: { Authorization: `Bearer ${userToken}` },
+        });
         const members = await response.json();
 
         console.log("=== getMembers StaffCards useEffect ===");

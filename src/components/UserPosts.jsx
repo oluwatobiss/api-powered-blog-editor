@@ -11,10 +11,7 @@ export default function UserPosts() {
     try {
       await fetch(`http://localhost:3000/posts/${postId}`, {
         method: "DELETE",
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${userToken}`,
-        },
+        headers: { Authorization: `Bearer ${userToken}` },
       });
       setReload(!reload);
     } catch (error) {
@@ -74,10 +71,7 @@ export default function UserPosts() {
 
       try {
         const response = await fetch(fetchUrl, {
-          headers: {
-            "Content-type": "application/json; charset=UTF-8",
-            Authorization: `Bearer ${userToken}`,
-          },
+          headers: { Authorization: `Bearer ${userToken}` },
         });
         const posts = await response.json();
 
