@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+const userToken = localStorage.getItem("apiPoweredBlogToken");
+
 export default function UserPosts() {
   const [userId, setUserId] = useState("");
   const [posts, setPosts] = useState([]);
@@ -9,6 +11,10 @@ export default function UserPosts() {
     try {
       await fetch(`http://localhost:3000/posts/${postId}`, {
         method: "DELETE",
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+          Authorization: `Bearer ${userToken}`,
+        },
       });
       setReload(!reload);
     } catch (error) {
@@ -67,7 +73,12 @@ export default function UserPosts() {
       console.log(fetchUrl);
 
       try {
-        const response = await fetch(fetchUrl);
+        const response = await fetch(fetchUrl, {
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
         const posts = await response.json();
 
         console.log("=== getPosts UserPosts try block ===");
