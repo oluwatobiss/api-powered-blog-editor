@@ -24,19 +24,22 @@ export default function UserPosts() {
   }
 
   function createPostElements(posts) {
-    return posts.map((post) => {
-      return (
-        <div key={post.id} className="post-card">
-          <h3 className="post-card-title">{post.title}</h3>
-          <button type="button" onClick={() => deletePost(post.id)}>
-            Delete
-          </button>
-          <button type="button" onClick={() => editPost(post)}>
-            Edit
-          </button>
-        </div>
-      );
-    });
+    const drafts = posts.map((post) => (
+      <div key={post.id} className="post-card">
+        <h3 className="post-card-title">{post.title}</h3>
+        <button type="button" onClick={() => deletePost(post.id)}>
+          Delete
+        </button>
+        <button type="button" onClick={() => editPost(post)}>
+          Edit
+        </button>
+      </div>
+    ));
+    return <article>{drafts}</article>;
+  }
+
+  function showNoPosts() {
+    return userId ? <p>You have no drafts.</p> : "";
   }
 
   useEffect(() => {
@@ -83,7 +86,7 @@ export default function UserPosts() {
   return (
     <>
       <h1>{userId ? "All posts" : "Only members are allowed here 😍"}</h1>
-      <article>{posts.length ? createPostElements(posts) : ""}</article>
+      {posts.length ? createPostElements(posts) : showNoPosts()}
     </>
   );
 }
