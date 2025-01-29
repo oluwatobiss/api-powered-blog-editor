@@ -12,7 +12,7 @@ export default function EditStaffForm() {
   const [email, setEmail] = useState(staffData.email);
   const [admin, setAdmin] = useState(staffData.status === "ADMIN");
   const [adminCode, setAdminCode] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState([]);
 
   console.log("=== Check if admin state works ===");
   console.log(admin);
@@ -46,9 +46,10 @@ export default function EditStaffForm() {
 
       console.log("=== EditStaffForm ===");
       console.log(staffDataResponse);
+      console.log(staffDataResponse.errors?.length);
 
-      staffDataResponse?.error
-        ? setError(staffDataResponse.error)
+      staffDataResponse.errors?.length
+        ? setErrors(staffDataResponse.errors)
         : (window.location.href = "/");
     } catch (e) {
       console.error(e);
@@ -56,8 +57,16 @@ export default function EditStaffForm() {
   }
 
   function updateAdminCode(e) {
-    error && setError("");
+    errors.length && setErrors([]);
     setAdminCode(e.target.value);
+  }
+
+  function showErrorFor(field) {
+    return errors.find((c) => c.path === field) ? (
+      <div className="error">{errors.find((c) => c.path === field).msg}</div>
+    ) : (
+      ""
+    );
   }
 
   return (
@@ -72,6 +81,7 @@ export default function EditStaffForm() {
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
+        {showErrorFor("firstName")}
       </div>
       <div>
         <label htmlFor="lastName">Last name</label>
@@ -83,6 +93,7 @@ export default function EditStaffForm() {
           onChange={(e) => setLastName(e.target.value)}
           required
         />
+        {showErrorFor("lastName")}
       </div>
       <div>
         <label htmlFor="username">Username</label>
@@ -94,6 +105,7 @@ export default function EditStaffForm() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
+        {showErrorFor("username")}
       </div>
       <div>
         <label htmlFor="email">Email</label>
@@ -105,6 +117,7 @@ export default function EditStaffForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        {showErrorFor("email")}
       </div>
       <div className="checkbox-container">
         <label htmlFor="adminCheckbox">Admin?</label>
@@ -128,11 +141,11 @@ export default function EditStaffForm() {
             onChange={updateAdminCode}
             required
           />
+          {showErrorFor("adminCode")}
         </div>
       ) : (
         ""
       )}
-      {error && <div className="error">{error}</div>}
       <button type="submit">Update Staff</button>
     </form>
   );
