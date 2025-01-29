@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 export default function UserConfigLogic() {
   useEffect(() => {
-    const expectedOrigin = "http://localhost:4321";
+    const expectedOrigin = import.meta.env.PUBLIC_FANSEND_URI;
     function handleMessageEvent(e) {
       console.log("=== UserConfigLogic ===");
       console.log(e);

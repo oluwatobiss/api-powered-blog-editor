@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const userToken = localStorage.getItem("apiPoweredBlogToken");
+const backendUri = import.meta.env.PUBLIC_BACKEND_URI;
 
 export default function UserPosts() {
   const [userId, setUserId] = useState("");
@@ -9,7 +10,7 @@ export default function UserPosts() {
 
   async function deletePost(postId) {
     try {
-      await fetch(`http://localhost:3000/posts/${postId}`, {
+      await fetch(`${backendUri}/posts/${postId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${userToken}` },
       });
@@ -63,8 +64,8 @@ export default function UserPosts() {
     async function getPosts() {
       const fetchUrl =
         userData.status === "ADMIN"
-          ? "http://localhost:3000/posts"
-          : `http://localhost:3000/posts/authors/${userData?.id}`;
+          ? `${backendUri}/posts`
+          : `${backendUri}/posts/authors/${userData?.id}`;
 
       console.log("=== getPosts UserPosts fetchUrl ===");
       console.log(fetchUrl);

@@ -27,7 +27,7 @@ export default function EditStaffForm() {
     try {
       const userToken = localStorage.getItem("apiPoweredBlogToken");
       const response = await fetch(
-        `http://localhost:3000/users/${staffData.id}`,
+        `${import.meta.env.PUBLIC_BACKEND_URI}/users/${staffData.id}`,
         {
           method: "PUT",
           body: JSON.stringify({

@@ -13,21 +13,22 @@ export default function SignUpForm() {
   async function registerUser(e) {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/users", {
-        method: "POST",
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          username,
-          email,
-          password,
-          admin,
-          adminCode,
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.PUBLIC_BACKEND_URI}/users`,
+        {
+          method: "POST",
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            username,
+            email,
+            password,
+            admin,
+            adminCode,
+          }),
+          headers: { "Content-type": "application/json; charset=UTF-8" },
+        }
+      );
       const userData = await response.json();
 
       console.log("=== SignUpForm ===");
@@ -36,7 +37,7 @@ export default function SignUpForm() {
 
       userData.errors?.length
         ? setErrors(userData.errors)
-        : (window.location.href = "http://localhost:4321");
+        : (window.location.href = import.meta.env.PUBLIC_FANSEND_URI);
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);

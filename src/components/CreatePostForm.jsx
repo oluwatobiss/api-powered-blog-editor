@@ -14,7 +14,7 @@ export default function CreatePostForm() {
       const userData = userDataJson && JSON.parse(userDataJson);
       const authorId = userData.id;
       const response = await fetch(
-        `http://localhost:3000/posts/authors/${authorId}`,
+        `${import.meta.env.PUBLIC_BACKEND_URI}/posts/authors/${authorId}`,
         {
           method: "POST",
           body: JSON.stringify({ title, body, published }),

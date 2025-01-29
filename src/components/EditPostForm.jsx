@@ -17,7 +17,7 @@ export default function EditPostForm() {
     try {
       const userToken = localStorage.getItem("apiPoweredBlogToken");
       const response = await fetch(
-        `http://localhost:3000/posts/${postData.id}`,
+        `${import.meta.env.PUBLIC_BACKEND_URI}/posts/${postData.id}`,
         {
           method: "PUT",
           body: JSON.stringify({ title, body, published }),

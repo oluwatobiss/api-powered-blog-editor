@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+const fansEndUri = import.meta.env.PUBLIC_FANSEND_URI;
 
 export default function Navigation() {
   const [userToken, setUserToken] = useState("");
@@ -10,11 +11,11 @@ export default function Navigation() {
     localStorage.removeItem("apiPoweredBlogUserData");
     localStorage.removeItem("apiPoweredBlogPostToEdit");
     if (iframeUseRef.current) {
-      const targetOrigin = "http://localhost:4321";
+      const targetOrigin = fansEndUri;
       const iframeWindow = iframeUseRef.current.contentWindow;
       iframeWindow.postMessage(userStatus, targetOrigin);
     }
-    window.location.href = "http://localhost:4321";
+    window.location.href = fansEndUri;
   }
 
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function Navigation() {
     <>
       <iframe
         id="apiBlogIframe"
-        src="http://localhost:4321/delete-user"
+        src={`${fansEndUri}/delete-user`}
         ref={iframeUseRef}
         width="0" // "800px"
         height="0" // "600px"

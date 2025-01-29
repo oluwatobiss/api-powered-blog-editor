@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const userToken = localStorage.getItem("apiPoweredBlogToken");
+const backendUri = import.meta.env.PUBLIC_BACKEND_URI;
 
 export default function StaffCards() {
   const [members, setMembers] = useState([]);
@@ -8,7 +9,7 @@ export default function StaffCards() {
 
   async function deleteMember(memberId) {
     try {
-      await fetch(`http://localhost:3000/users/${memberId}`, {
+      await fetch(`${backendUri}/users/${memberId}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${userToken}` },
       });
@@ -59,7 +60,7 @@ export default function StaffCards() {
   useEffect(() => {
     async function getMembers() {
       try {
-        const response = await fetch(`http://localhost:3000/users`, {
+        const response = await fetch(`${backendUri}/users`, {
           headers: { Authorization: `Bearer ${userToken}` },
         });
         const members = await response.json();
