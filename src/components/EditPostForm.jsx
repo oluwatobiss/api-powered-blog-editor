@@ -15,6 +15,7 @@ export default function EditPostForm() {
     console.log(postData);
 
     try {
+      const userToken = localStorage.getItem("apiPoweredBlogToken");
       const response = await fetch(
         `http://localhost:3000/posts/${postData.id}`,
         {
@@ -22,6 +23,7 @@ export default function EditPostForm() {
           body: JSON.stringify({ title, body, published }),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${userToken}`,
           },
         }
       );
