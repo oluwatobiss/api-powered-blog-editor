@@ -1,19 +1,19 @@
 import { useEffect } from "react";
 
-export default function TokenConfigLogic() {
+export default function UserConfigLogic() {
   useEffect(() => {
     const expectedOrigin = "http://localhost:4321";
     function handleMessageEvent(e) {
-      console.log("=== TokenConfigLogic ===");
+      console.log("=== UserConfigLogic ===");
       console.log(e);
 
       if (e.origin === expectedOrigin) {
-        const userObj = e.data;
-        if (userObj !== null) {
-          localStorage.setItem("apiPoweredBlogToken", userObj.token);
+        const userData = e.data;
+        if (userData !== null) {
+          localStorage.setItem("apiPoweredBlogToken", userData.token);
           localStorage.setItem(
             "apiPoweredBlogUserData",
-            JSON.stringify(userObj.payload)
+            JSON.stringify(userData.payload)
           );
         }
       }
@@ -21,5 +21,10 @@ export default function TokenConfigLogic() {
     window.addEventListener("message", handleMessageEvent);
     return () => window.removeEventListener("message", handleMessageEvent);
   });
-  return <p>This page is solely for configuring the app's token.</p>;
+  return (
+    <p>
+      This page is solely for adding the user's token and data to the web
+      storage.
+    </p>
+  );
 }
