@@ -25,6 +25,7 @@ export default function EditStaffForm() {
     console.log(staffData);
 
     try {
+      const userToken = localStorage.getItem("apiPoweredBlogToken");
       const response = await fetch(
         `http://localhost:3000/users/${staffData.id}`,
         {
@@ -39,6 +40,7 @@ export default function EditStaffForm() {
           }),
           headers: {
             "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${userToken}`,
           },
         }
       );
@@ -48,9 +50,9 @@ export default function EditStaffForm() {
       console.log(staffDataResponse);
       console.log(staffDataResponse.errors?.length);
 
-      staffDataResponse.errors?.length
-        ? setErrors(staffDataResponse.errors)
-        : (window.location.href = "/");
+      // staffDataResponse.errors?.length
+      //   ? setErrors(staffDataResponse.errors)
+      //   : (window.location.href = "/");
     } catch (e) {
       console.error(e);
     }
