@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function UserPosts() {
+  const [userId, setUserId] = useState("");
   const [posts, setPosts] = useState([]);
   const [reload, setReload] = useState(false);
 
@@ -51,6 +52,8 @@ export default function UserPosts() {
     console.log("=== UserPosts useEffect ===");
     console.log(userData);
 
+    userData?.id && setUserId(userData.id);
+
     async function getPosts() {
       const fetchUrl =
         userData.status === "ADMIN"
@@ -77,5 +80,10 @@ export default function UserPosts() {
     userData && getPosts();
   }, [reload]);
 
-  return <article>{posts.length ? createPostElements(posts) : ""}</article>;
+  return (
+    <>
+      <h1>{userId ? "All posts" : "Only members are allowed here 😍"}</h1>
+      <article>{posts.length ? createPostElements(posts) : ""}</article>
+    </>
+  );
 }
