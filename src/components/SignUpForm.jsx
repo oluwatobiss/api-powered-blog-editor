@@ -69,8 +69,8 @@ export default function SignUpForm() {
           onChange={(e) => setFirstName(e.target.value)}
           required
         />
+        {showErrorFor("firstName")}
       </div>
-      {showErrorFor("firstName")}
       <div>
         <label htmlFor="lastName">Last name</label>
         <input
@@ -81,8 +81,8 @@ export default function SignUpForm() {
           onChange={(e) => setLastName(e.target.value)}
           required
         />
+        {showErrorFor("lastName")}
       </div>
-      {showErrorFor("lastName")}
       <div>
         <label htmlFor="username">Username</label>
         <input
@@ -93,8 +93,8 @@ export default function SignUpForm() {
           onChange={(e) => setUsername(e.target.value)}
           required
         />
+        {showErrorFor("username")}
       </div>
-      {showErrorFor("username")}
       <div>
         <label htmlFor="email">Email</label>
         <input
@@ -105,8 +105,8 @@ export default function SignUpForm() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
+        {showErrorFor("email")}
       </div>
-      {showErrorFor("email")}
       <div>
         <label htmlFor="password">Password</label>
         <input
@@ -117,8 +117,8 @@ export default function SignUpForm() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+        {showErrorFor("password")}
       </div>
-      {showErrorFor("password")}
       <div className="checkbox-container">
         <label htmlFor="adminCheckbox">Admin?</label>
         <input
@@ -139,11 +139,11 @@ export default function SignUpForm() {
             onChange={updateAdminCode}
             required
           />
+          {showErrorFor("adminCode")}
         </div>
       ) : (
         ""
       )}
-      {showErrorFor("adminCode")}
       <button type="submit">Sign up</button>
     </form>
   );

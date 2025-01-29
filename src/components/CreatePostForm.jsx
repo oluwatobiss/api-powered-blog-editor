@@ -59,8 +59,8 @@ export default function CreatePostForm() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        {showErrorFor("title")}
       </div>
-      {showErrorFor("title")}
       <div>
         <label htmlFor="body">Body</label>
         <textarea
@@ -69,8 +69,8 @@ export default function CreatePostForm() {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
+        {showErrorFor("body")}
       </div>
-      {showErrorFor("body")}
       <div className="checkbox-container">
         <label htmlFor="publishPost">Publish Now?</label>
         <input

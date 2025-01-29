@@ -7,6 +7,7 @@ export default function EditPostForm() {
   const [title, setTitle] = useState(postData.title);
   const [body, setBody] = useState(postData.body);
   const [published, setPublished] = useState(postData.published);
+  const [errors, setErrors] = useState([]);
 
   async function submitPostUpdates(e) {
     e.preventDefault();
@@ -14,17 +15,36 @@ export default function EditPostForm() {
     console.log(postData);
 
     try {
-      await fetch(`http://localhost:3000/posts/${postData.id}`, {
-        method: "PUT",
-        body: JSON.stringify({ title, body, published }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-        },
-      });
-      window.location.href = "/";
+      const response = await fetch(
+        `http://localhost:3000/posts/${postData.id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({ title, body, published }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+          },
+        }
+      );
+      const responseObj = await response.json();
+
+      console.log("=== submitPost Response ===");
+      console.log(responseObj);
+      console.log(responseObj.errors?.length);
+
+      responseObj.errors?.length
+        ? setErrors(responseObj.errors)
+        : (window.location.href = "/");
     } catch (e) {
       console.error(e);
     }
+  }
+
+  function showErrorFor(field) {
+    return errors.find((c) => c.path === field) ? (
+      <div className="error">{errors.find((c) => c.path === field).msg}</div>
+    ) : (
+      ""
+    );
   }
 
   return (
@@ -38,6 +58,7 @@ export default function EditPostForm() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        {showErrorFor("title")}
       </div>
       <div>
         <label htmlFor="body">Body</label>
@@ -47,6 +68,7 @@ export default function EditPostForm() {
           value={body}
           onChange={(e) => setBody(e.target.value)}
         ></textarea>
+        {showErrorFor("body")}
       </div>
       <div className="checkbox-container">
         <label htmlFor="publishPost">Publish Now?</label>
