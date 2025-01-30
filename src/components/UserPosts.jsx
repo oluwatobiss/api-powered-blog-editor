@@ -28,8 +28,15 @@ export default function UserPosts() {
   }
 
   function createPostElements(posts) {
+    console.log("=== createPostElements ===");
+
+    console.log(posts);
+
     const drafts = posts.map((post) => (
       <div key={post.id} className="post-card">
+        <span className="post-status">
+          {post.published ? "published" : "draft"}
+        </span>
         <h3 className="post-card-title">{post.title}</h3>
         <button type="button" onClick={() => deletePost(post.id)}>
           Delete

@@ -56,6 +56,16 @@ h1 {
   margin-bottom: 15px;
 }
 
+.post-status {
+  display: inline-block;
+  margin-bottom: 7px;
+  border: 1px solid dimgray;
+  border-radius: 5px;
+  padding: 3px 15px;
+  font-size: 0.9rem;
+  color: dimgray;
+}
+
 .post-card-title,
 .member-card-name {
   margin-top: 0;
