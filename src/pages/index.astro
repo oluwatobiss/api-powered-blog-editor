@@ -1,8 +1,9 @@
 ---
 import UserPosts from "../components/UserPosts";
 import Layout from "../layouts/Layout.astro";
+const pageTitle = "Home | staffBlog";
 ---
 
-<Layout>
+<Layout pageTitle={pageTitle}>
   <UserPosts client:only="react" />
 </Layout>

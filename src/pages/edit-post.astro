@@ -1,9 +1,10 @@
 ---
 import EditPostForm from "../components/EditPostForm";
 import Layout from "../layouts/Layout.astro";
+const pageTitle = "Edit Post | staffBlog";
 ---
 
-<Layout>
-  <h1>Edit this post</h1>
+<Layout pageTitle={pageTitle}>
+  <h1>Update post</h1>
   <EditPostForm client:only="react" />
 </Layout>

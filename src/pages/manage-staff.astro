@@ -1,9 +1,10 @@
 ---
 import StaffCards from "../components/StaffCards";
 import Layout from "../layouts/Layout.astro";
+const pageTitle = "All members | staffBlog";
 ---
 
-<Layout>
+<Layout pageTitle={pageTitle}>
   <h1>All members</h1>
   <StaffCards client:only="react" />
 </Layout>
