@@ -37,7 +37,7 @@ export default function SignUpForm() {
 
       userData.errors?.length
         ? setErrors(userData.errors)
-        : (window.location.href = import.meta.env.PUBLIC_FANSEND_URI);
+        : (window.location.href = "/");
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);

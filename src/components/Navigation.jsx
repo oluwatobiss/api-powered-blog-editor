@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+
 const fansEndUri = import.meta.env.PUBLIC_FANSEND_URI;
 
 export default function Navigation() {
@@ -15,7 +16,7 @@ export default function Navigation() {
       const iframeWindow = iframeUseRef.current.contentWindow;
       iframeWindow.postMessage(userStatus, targetOrigin);
     }
-    window.location.href = fansEndUri;
+    window.location.href = "/";
   }
 
   useEffect(() => {
@@ -51,8 +52,9 @@ export default function Navigation() {
         style={{ border: "none" }}
       ></iframe>
       <div className="nav-links">
-        <a href="/">Home</a>
-        {!userToken && <a href="/sign-up">Sign up</a>}
+        <a href="/">staffBlog</a>
+        {!userStatus && <a href="/sign-up">Sign up</a>}
+        {!userToken && <a href="/log-in">Log in</a>}
         {userToken && userStatus === "ADMIN" ? (
           <a href="/manage-staff/">Manage staff</a>
         ) : (
