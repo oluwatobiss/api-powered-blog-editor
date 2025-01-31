@@ -46,7 +46,7 @@ export default function UserPosts() {
   }
 
   function showNoPosts() {
-    return userId ? <p>You have no drafts.</p> : "";
+    return userId ? <p>No drafts are available.</p> : "";
   }
 
   useEffect(() => {
@@ -59,7 +59,7 @@ export default function UserPosts() {
     async function getPosts() {
       const fetchUrl =
         userData.status === "ADMIN"
-          ? `${backendUri}/posts`
+          ? `${backendUri}/posts?status=${userData?.status}`
           : `${backendUri}/posts/authors/${userData?.id}`;
 
       try {
