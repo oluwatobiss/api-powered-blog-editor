@@ -37,9 +37,7 @@ A website that lets the company's staff authenticate themselves and manage posts
 
 ## Usage
 
-> **Note:**
->
-> [The backend](https://github.com/oluwatobiss/api-powered-blog-backend) must be running for this website to function appropriately.
+> **Note:** [The backend](https://github.com/oluwatobiss/api-powered-blog-backend) must be running for this website to function appropriately.
 
 1. Clone the project
 
