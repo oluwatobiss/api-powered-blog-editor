@@ -20,11 +20,6 @@ export default function LoginForm() {
         }
       );
       const userData = await response.json();
-
-      console.log("=== LoginForm ===");
-      console.log(userData);
-      console.log(userData.errors?.length);
-
       localStorage.setItem("apiPoweredBlogToken", userData.token);
       localStorage.setItem(
         "apiPoweredBlogUserData",

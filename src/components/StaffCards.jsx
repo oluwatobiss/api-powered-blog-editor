@@ -31,9 +31,6 @@ export default function StaffCards() {
     const userData = userDataJson && JSON.parse(userDataJson);
 
     return members.map((member) => {
-      console.log("=== StaffCards createStaffCards ===");
-      console.log({ userData, member });
-
       return (
         <div key={member.id} className="member-card">
           <div className="member-card-bio">
@@ -64,10 +61,6 @@ export default function StaffCards() {
           headers: { Authorization: `Bearer ${userToken}` },
         });
         const members = await response.json();
-
-        console.log("=== getMembers StaffCards useEffect ===");
-        console.log(members);
-
         setMembers(members);
       } catch (error) {
         if (error instanceof Error) {

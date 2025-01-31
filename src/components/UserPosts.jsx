@@ -28,10 +28,6 @@ export default function UserPosts() {
   }
 
   function createPostElements(posts) {
-    console.log("=== createPostElements ===");
-
-    console.log(posts);
-
     const drafts = posts.map((post) => (
       <div key={post.id} className="post-card">
         <span className="post-status">
@@ -55,17 +51,9 @@ export default function UserPosts() {
 
   useEffect(() => {
     let userDataJson = localStorage.getItem("apiPoweredBlogUserData");
-
-    console.log("=== Editor's UserPosts useEffect ===");
-    console.log(userDataJson);
-
     userDataJson === "undefined" && (userDataJson = undefined);
 
     const userData = userDataJson && JSON.parse(userDataJson);
-
-    console.log("=== UserPosts useEffect ===");
-    console.log(userData);
-
     userData?.id && setUserId(userData.id);
 
     async function getPosts() {
@@ -74,18 +62,11 @@ export default function UserPosts() {
           ? `${backendUri}/posts`
           : `${backendUri}/posts/authors/${userData?.id}`;
 
-      console.log("=== getPosts UserPosts fetchUrl ===");
-      console.log(fetchUrl);
-
       try {
         const response = await fetch(fetchUrl, {
           headers: { Authorization: `Bearer ${userToken}` },
         });
         const posts = await response.json();
-
-        console.log("=== getPosts UserPosts try block ===");
-        console.log(posts);
-
         setPosts(posts);
       } catch (error) {
         if (error instanceof Error) {

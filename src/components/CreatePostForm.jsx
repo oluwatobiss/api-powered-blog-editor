@@ -25,11 +25,6 @@ export default function CreatePostForm() {
         }
       );
       const responseObj = await response.json();
-
-      console.log("=== submitPost Response ===");
-      console.log(responseObj);
-      console.log(responseObj.errors?.length);
-
       responseObj.errors?.length
         ? setErrors(responseObj.errors)
         : (window.location.href = "/");

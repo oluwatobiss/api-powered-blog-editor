@@ -30,11 +30,6 @@ export default function SignUpForm() {
         }
       );
       const userData = await response.json();
-
-      console.log("=== SignUpForm ===");
-      console.log(userData);
-      console.log(userData.errors?.length);
-
       userData.errors?.length
         ? setErrors(userData.errors)
         : (window.location.href = "/");

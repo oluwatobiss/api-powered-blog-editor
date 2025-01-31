@@ -11,9 +11,6 @@ export default function EditPostForm() {
 
   async function submitPostUpdates(e) {
     e.preventDefault();
-    console.log("=== submitPostUpdates ===");
-    console.log(postData);
-
     try {
       const userToken = localStorage.getItem("apiPoweredBlogToken");
       const response = await fetch(
@@ -28,11 +25,6 @@ export default function EditPostForm() {
         }
       );
       const responseObj = await response.json();
-
-      console.log("=== submitPost Response ===");
-      console.log(responseObj);
-      console.log(responseObj.errors?.length);
-
       responseObj.errors?.length
         ? setErrors(responseObj.errors)
         : (window.location.href = "/");

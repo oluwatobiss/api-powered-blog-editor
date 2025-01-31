@@ -14,16 +14,8 @@ export default function EditStaffForm() {
   const [adminCode, setAdminCode] = useState("");
   const [errors, setErrors] = useState([]);
 
-  console.log("=== Check if admin state works ===");
-  console.log(admin);
-
-  console.log({ userData, staffData });
-
   async function submitStaffUpdates(e) {
     e.preventDefault();
-    console.log("=== submitStaffUpdates ===");
-    console.log(staffData);
-
     try {
       const userToken = localStorage.getItem("apiPoweredBlogToken");
       const response = await fetch(
@@ -45,14 +37,9 @@ export default function EditStaffForm() {
         }
       );
       const staffDataResponse = await response.json();
-
-      console.log("=== EditStaffForm ===");
-      console.log(staffDataResponse);
-      console.log(staffDataResponse.errors?.length);
-
-      // staffDataResponse.errors?.length
-      //   ? setErrors(staffDataResponse.errors)
-      //   : (window.location.href = "/");
+      staffDataResponse.errors?.length
+        ? setErrors(staffDataResponse.errors)
+        : (window.location.href = "/");
     } catch (e) {
       console.error(e);
     }
