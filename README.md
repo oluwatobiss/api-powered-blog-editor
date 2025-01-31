@@ -67,7 +67,7 @@ touch .env
 
 ```
 PUBLIC_BACKEND_URI="http://localhost:3000"
-PUBLIC_FANSEND_URI="http://localhost:4321"
+PUBLIC_FANSEND_URI="http://localhost:PORT"
 ```
 
 6. Start the server
