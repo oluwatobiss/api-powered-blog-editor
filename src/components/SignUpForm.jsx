@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+const backendUri = import.meta.env.PUBLIC_BACKEND_URI;
+
 export default function SignUpForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -13,22 +15,19 @@ export default function SignUpForm() {
   async function registerUser(e) {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `${import.meta.env.PUBLIC_BACKEND_URI}/users`,
-        {
-          method: "POST",
-          body: JSON.stringify({
-            firstName,
-            lastName,
-            username,
-            email,
-            password,
-            admin,
-            adminCode,
-          }),
-          headers: { "Content-type": "application/json; charset=UTF-8" },
-        }
-      );
+      const response = await fetch(`${backendUri}/users`, {
+        method: "POST",
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          username,
+          email,
+          password,
+          admin,
+          adminCode,
+        }),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
       const userData = await response.json();
       userData.errors?.length
         ? setErrors(userData.errors)

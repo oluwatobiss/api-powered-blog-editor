@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 
 const fansEndUri = import.meta.env.PUBLIC_FANSEND_URI;
+const backendUri = import.meta.env.PUBLIC_BACKEND_URI;
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");
@@ -11,14 +12,11 @@ export default function LoginForm() {
   async function authenticateUser(e) {
     e.preventDefault();
     try {
-      const response = await fetch(
-        `${import.meta.env.PUBLIC_BACKEND_URI}/auths`,
-        {
-          method: "POST",
-          body: JSON.stringify({ email, password }),
-          headers: { "Content-type": "application/json; charset=UTF-8" },
-        }
-      );
+      const response = await fetch(`${backendUri}/auths`, {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+        headers: { "Content-type": "application/json; charset=UTF-8" },
+      });
       const userData = await response.json();
       localStorage.setItem("apiPoweredBlogToken", userData.token);
       localStorage.setItem(
