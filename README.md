@@ -80,6 +80,25 @@ npm run dev
 
 - https://staffblog.netlify.app/
 
+## Known Issue
+
+In the production environment, logging in or out of StaffBlog (the editing app) **does not** automatically log the staff in or out of FansInSync (the consumption website).
+
+This issue happens on browsers with the 'tracking protection' switched on.
+
+Browsers with "tracking protection" switched on (which is typically the default setting for most modern browsers) block websites with "https://" protocol from setting data in the `localStorage` of another website.
+
+**References**
+
+- https://stackoverflow.com/a/63940983/11841906
+- https://support.mozilla.org/en-US/kb/introducing-total-cookie-protection-standard-mode
+- https://learn.microsoft.com/en-us/microsoft-edge/web-platform/tracking-prevention
+- https://developer.mozilla.org/en-US/docs/Web/Privacy/Storage_Access_Policy
+
+**Possible Solution**
+
+- Research whether using the `js-cookie` library to store authentication data rather than the `localStorage` API would allow login sessions to be shared between multiple websites.
+
 ## Related Repos
 
 - [FansInSync](https://github.com/oluwatobiss/api-powered-blog-website)
