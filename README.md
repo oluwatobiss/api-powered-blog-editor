@@ -86,7 +86,11 @@ In the production environment, logging in or out of StaffBlog (the editing app)�
 
 This issue happens on browsers with the 'tracking protection' switched on.
 
-Browsers with "tracking protection" switched on (which is typically the default setting for most modern browsers) block websites with "https://" protocol from setting data in the `localStorage` of another website.
+Browsers with "tracking protection" switched on (which is typically the default setting for most modern browsers) block websites with "https://" protocol from using `localStorage` from a third-party context (for instance, from an iframe). Instead, the browsers would provide partitioned storage. So browsers like Firefox would show the following type of warning in the console:
+
+```
+Partitioned cookie or storage access was provided to “https://your.website.app” because it is loaded in the third-party context and dynamic state partitioning is enabled.
+```
 
 **References**
 
@@ -94,6 +98,7 @@ Browsers with "tracking protection" switched on (which is typically the default 
 - https://support.mozilla.org/en-US/kb/introducing-total-cookie-protection-standard-mode
 - https://learn.microsoft.com/en-us/microsoft-edge/web-platform/tracking-prevention
 - https://developer.mozilla.org/en-US/docs/Web/Privacy/Storage_Access_Policy
+- https://developer.mozilla.org/en-US/docs/Web/Privacy/Storage_Access_Policy/Errors/CookiePartitionedForeign
 
 **Possible Solution**
 
