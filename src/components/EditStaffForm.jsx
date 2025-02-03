@@ -4,7 +4,6 @@ const userDataJson = localStorage.getItem("apiPoweredBlogUserData");
 const staffDataJson = localStorage.getItem("apiPoweredBlogStaffToEdit");
 const userData = userDataJson && JSON.parse(userDataJson);
 const staffData = staffDataJson && JSON.parse(staffDataJson);
-const backendUri = import.meta.env.PUBLIC_BACKEND_URI;
 
 export default function EditStaffForm() {
   const [firstName, setFirstName] = useState(staffData.firstName);
@@ -19,21 +18,24 @@ export default function EditStaffForm() {
     e.preventDefault();
     try {
       const userToken = localStorage.getItem("apiPoweredBlogToken");
-      const response = await fetch(`${backendUri}/users/${staffData.id}`, {
-        method: "PUT",
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          username,
-          email,
-          admin,
-          adminCode,
-        }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.PUBLIC_BACKEND_URI}/users/${staffData.id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({
+            firstName,
+            lastName,
+            username,
+            email,
+            admin,
+            adminCode,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
       const staffDataResponse = await response.json();
       staffDataResponse.errors?.length
         ? setErrors(staffDataResponse.errors)

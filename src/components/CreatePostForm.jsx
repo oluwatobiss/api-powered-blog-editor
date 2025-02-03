@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-const backendUri = import.meta.env.PUBLIC_BACKEND_URI;
-
 export default function CreatePostForm() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
@@ -15,14 +13,17 @@ export default function CreatePostForm() {
       const userDataJson = localStorage.getItem("apiPoweredBlogUserData");
       const userData = userDataJson && JSON.parse(userDataJson);
       const authorId = userData.id;
-      const response = await fetch(`${backendUri}/posts/authors/${authorId}`, {
-        method: "POST",
-        body: JSON.stringify({ title, body, published }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.PUBLIC_BACKEND_URI}/posts/authors/${authorId}`,
+        {
+          method: "POST",
+          body: JSON.stringify({ title, body, published }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
       const responseObj = await response.json();
       responseObj.errors?.length
         ? setErrors(responseObj.errors)

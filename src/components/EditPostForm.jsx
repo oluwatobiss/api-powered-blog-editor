@@ -2,7 +2,6 @@ import { useState } from "react";
 
 const postDataJson = localStorage.getItem("apiPoweredBlogPostToEdit");
 const postData = postDataJson && JSON.parse(postDataJson);
-const backendUri = import.meta.env.PUBLIC_BACKEND_URI;
 
 export default function EditPostForm() {
   const [title, setTitle] = useState(postData.title);
@@ -14,14 +13,17 @@ export default function EditPostForm() {
     e.preventDefault();
     try {
       const userToken = localStorage.getItem("apiPoweredBlogToken");
-      const response = await fetch(`${backendUri}/posts/${postData.id}`, {
-        method: "PUT",
-        body: JSON.stringify({ title, body, published }),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8",
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.PUBLIC_BACKEND_URI}/posts/${postData.id}`,
+        {
+          method: "PUT",
+          body: JSON.stringify({ title, body, published }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
       const responseObj = await response.json();
       responseObj.errors?.length
         ? setErrors(responseObj.errors)
