@@ -76,6 +76,10 @@ PUBLIC_FANSEND_URI="http://localhost:PORT"
 npm run dev
 ```
 
+## Live Demo
+
+- https://staffblog.netlify.app/
+
 ## Related Repos
 
 - [FansInSync](https://github.com/oluwatobiss/api-powered-blog-website)
