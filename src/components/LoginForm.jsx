@@ -27,12 +27,16 @@ export default function LoginForm() {
       );
       if (iframeUseRef.current) {
         const targetOrigin = fansEndUri;
+
+        console.log("=== LoginForm targetOrigin ===");
+        console.log(targetOrigin);
+
         const iframeWindow = iframeUseRef.current.contentWindow;
         iframeWindow.postMessage(userData, targetOrigin);
       }
-      userData.errors?.length
-        ? setErrors(userData.errors)
-        : (window.location.href = "/");
+      // userData.errors?.length
+      //   ? setErrors(userData.errors)
+      //   : (window.location.href = "/");
     } catch (error) {
       if (error instanceof Error) {
         console.error(error.message);
